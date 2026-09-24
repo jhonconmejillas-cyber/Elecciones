@@ -3,7 +3,7 @@ package com.elecciones.gestion;
 import com.elecciones.modelo.Territorio;
 import com.elecciones.modelo.PuestoVotacion;
 import com.elecciones.modelo.Mesa;
-
+//hola soy sebastian
 /**
  * Representa un analista que revisa los resultados consolidados.
  * Autor: Jhon Mejia
