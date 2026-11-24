@@ -1,16 +1,18 @@
 package com.elecciones.gestion;
 
+import com.elecciones.modelo.Acta;
 import com.elecciones.modelo.Territorio;
-import com.elecciones.modelo.PuestoVotacion;
-import com.elecciones.modelo.Mesa;
-//hola soy sebastian
+
 /**
  * Representa un analista que revisa los resultados consolidados.
+ * Es observador de las actas publicadas (Observer) y consulta totales
+ * mediante la jerarquía Composite de Territorio.
  * Autor: Jhon Mejia
  */
-public class Analista {
+public class Analista implements ResultadoObserver {
     private String idAnalista;
     private String nombre;
+    private int actasRecibidas;
 
     public Analista(String idAnalista, String nombre) {
         this.idAnalista = idAnalista;
@@ -25,17 +27,17 @@ public class Analista {
     }
 
     public int totalVotosTerritorio(Territorio t) {
-        int total = 0;
-        for (PuestoVotacion p : t.getPuestosVotacion()) {
-            for (Mesa m : p.getMesas()) {
-                if (m.getActa() != null) {
-                    total += m.getActa().totalVotos();
-                }
-            }
-        }
-        return total;
+        return t.totalVotos(); // Composite: recorre puestos, mesas y municipios
     }
 
+    @Override
+    public void actaPublicada(Acta acta) {
+        actasRecibidas++;
+        System.out.println("Analista " + nombre + " recibió el acta " + acta.getIdActa()
+                + " (" + acta.totalVotos() + " votos)");
+    }
+
+    public int getActasRecibidas() { return actasRecibidas; }
     public String getIdAnalista() { return idAnalista; }
     public String getNombre() { return nombre; }
 
