@@ -1,0 +1,38 @@
+name: CI Elecciones
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature-**"
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Compilar
+        run: mvn -B compile
+
+      - name: Ejecutar pruebas unitarias
+        run: mvn -B test
+
+      - name: Publicar reporte de pruebas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-pruebas
+          path: target/surefire-reports/
