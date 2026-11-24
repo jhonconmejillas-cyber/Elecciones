@@ -7,7 +7,7 @@ import java.util.List;
  * Representa una mesa de votación dentro de un puesto.
  * Autor: Juan Maldonado - feature/proceso-territorio
  */
-public class Mesa {
+public class Mesa implements ElementoElectoral{
     private int numeroMesa;
     private int censoVotantes;
     private PuestoVotacion puestoVotacion;
@@ -33,7 +33,15 @@ public class Mesa {
     public void registrarActa(Acta a) {
         this.acta = a;
     }
+        @Override
+    public int totalVotos() {
+        return acta == null ? 0 : acta.totalVotos();
+    }
 
+    @Override
+    public int totalCenso() {
+        return censoVotantes;
+    }
     public int getNumeroMesa() { return numeroMesa; }
     public int getCensoVotantes() { return censoVotantes; }
     public PuestoVotacion getPuestoVotacion() { return puestoVotacion; }

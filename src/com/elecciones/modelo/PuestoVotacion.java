@@ -7,7 +7,7 @@ import java.util.List;
  * Representa un puesto de votación dentro de un territorio.
  * Autor: Juan Maldonado - feature/proceso-territorio
  */
-public class PuestoVotacion {
+public class PuestoVotacion implements ElementoElectoral {
     private String idPuesto;
     private String nombre;
     private String ubicacion;
@@ -25,7 +25,23 @@ public class PuestoVotacion {
     public void agregarMesa(Mesa m) {
         mesas.add(m);
     }
+        @Override
+    public int totalVotos() {
+        int total = 0;
+        for (Mesa m : mesas) {
+            total += m.totalVotos();
+        }
+        return total;
+    }
 
+    @Override
+    public int totalCenso() {
+        int total = 0;
+        for (Mesa m : mesas) {
+            total += m.totalCenso();
+        }
+        return total;
+    }
     public String getIdPuesto() { return idPuesto; }
     public String getNombre() { return nombre; }
     public String getUbicacion() { return ubicacion; }
